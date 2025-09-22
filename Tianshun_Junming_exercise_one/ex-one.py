@@ -245,13 +245,13 @@ print("Type of response_data_feed:", type(response_data_feed))
 
 for key, value in response_data_feed.items():
     print(f"{key}: {value}")
-# aqi: 30
+# aqi: 21
 # idx: 5468
 # attributions: [{'url': 'http://ville.montreal.qc.ca/portal/page?_pageid=7237,74495616&_dad=portal&_schema=PORTAL', 'name': "Ville de Montreal - Réseau de surveillance de la qualité de l'air", 'logo': 'Canada-Montreal.png'}, {'url': 'https://waqi.info/', 'name': 'World Air 
 # Quality Index Project'}]
 # city: {'geo': [45.426509, -73.928944], 'name': 'Sainte-Anne-de-Bellevue, Montreal, Canada', 'url': 'https://aqicn.org/city/canada/montreal/sainte-anne-de-bellevue', 'location': ''}
 # dominentpol: pm25
-# iaqi: {'co': {'v': 6.4}, 'h': {'v': 78.8}, 'no2': {'v': 3.7}, 'o3': {'v': 18}, 'p': {'v': 1012.9}, 'pm25': {'v': 30}, 'so2': {'v': 5.1}, 't': {'v': 19.2}, 'w': {'v': 1.6}, 'wg': {'v': 2.6}}
+# iaqi: {'co': {'v': 6.4}, 'h': {'v': 78.8}, 'no2': {'v': 3.7}, 'o3': {'v': 18}, 'p': {'v': 1012.9}, 'pm25': {'v': 21}, 'so2': {'v': 5.1}, 't': {'v': 19.2}, 'w': {'v': 1.6}, 'wg': {'v': 2.6}}
 # time: {'s': '2025-09-22 15:00:00', 'tz': '-04:00', 'v': 1758553200, 'iso': '2025-09-22T15:00:00-04:00'}
 # forecast: {'daily': {'pm10': [{'avg': 6, 'day': '2025-09-20', 'max': 6, 'min': 5}, {'avg': 11, 'day': '2025-09-21', 'max': 17, 'min': 6}, {'avg': 11, 'day': '2025-09-22', 'max': 13, 'min': 9}, {'avg': 12, 'day': '2025-09-23', 'max': 15, 'min': 9}, {'avg': 9, 'day': '2025-09-24', 'max': 17, 'min': 7}, {'avg': 6, 'day': '2025-09-25', 'max': 9, 'min': 4}, {'avg': 6, 'day': '2025-09-26', 'max': 9, 'min': 3}, {'avg': 11, 'day': '2025-09-27', 'max': 12, 'min': 8}], 'pm25': [{'avg': 13, 'day': '2025-09-20', 'max': 13, 'min': 12}, {'avg': 36, 'day': '2025-09-21', 'max': 53, 'min': 13}, {'avg': 34, 'day': '2025-09-22', 'max': 45, 'min': 28}, {'avg': 46, 'day': '2025-09-23', 'max': 53, 'min': 38}, {'avg': 30, 'day': '2025-09-24', 'max': 54, 'min': 22}, {'avg': 22, 'day': '2025-09-25', 'max': 28, 'min': 12}, {'avg': 21, 'day': '2025-09-26', 'max': 34, 'min': 9}, {'avg': 42, 'day': '2025-09-27', 'max': 47, 'min': 29}], 'uvi': [{'avg': 0, 'day': '2025-09-21', 'max': 0, 'min': 0}, {'avg': 0, 'day': '2025-09-22', 'max': 4, 'min': 0}, {'avg': 0, 'day': '2025-09-23', 'max': 2, 'min': 0}, {'avg': 1, 'day': '2025-09-24', 'max': 5, 'min': 0}, {'avg': 0, 'day': '2025-09-25', 'max': 2, 'min': 0}, {'avg': 0, 'day': '2025-09-26', 'max': 3, 'min': 0}]}}
 # debug: {'sync': '2025-09-23T05:44:21+09:00'}
