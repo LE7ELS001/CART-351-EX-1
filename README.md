@@ -1,1 +1,2 @@
-# CART-351-EX-1
+## CART 351 Exerise 1
+# Team: Tianshun, Junming
