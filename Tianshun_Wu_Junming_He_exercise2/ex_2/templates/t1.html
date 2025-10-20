@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+
+  <h3>Today's Donut Board <span class="badge">{{ number_of_donuts }} in stock</span></h3>
+  <p class="h-subtle">Fresh batch every morning — flavours rotate.</p>
+
+  {% if number_of_donuts > 20 %}
+    <div class="card accent">✨ Busy day! Plenty of choices — grab your favourite.</div>
+  {% else %}
+    <div class="card">⚠️ Limited stock — some flavours might sell out.</div>
+  {% endif %}
+
+  <div class="card">
+    <h4>Flavours</h4>
+    <ol class="list-clean">
+      {% for f in donut_data.flavours %}
+        <li>{{ f }}</li>
+      {% endfor %}
+    </ol>
+  </div>
+
+  <div class="card">
+    <h4>Toppings</h4>
+    <ul class="list-clean">
+      {% for t in donut_data.toppings %}
+        <li>{{ t }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4>Ice-cream Pairings</h4>
+    <ul class="list-clean">
+      {% for ic in icecream_flavors %}
+        <li>{{ ic }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <h4>Gallery</h4>
+  <div class="gallery">
+    {% for name in ['donut_a.png','donut_b.png','donut_c.png','donut_d.png','donut_e.png','donut_f.png','donut_pink.png','donut_sprinkles.png'] %}
+      <figure class="figure">
+        <img src="{{ url_for('static', filename='images/' ~ name) }}" alt="{{ name }}">
+        <figcaption>{{ name.replace('_',' ').replace('.png','') }}</figcaption>
+      </figure>
+    {% endfor %}
+  </div>
+
+{% endblock %}

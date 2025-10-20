@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+
+  <h3>Leave us a note</h3>
+
+  <form class="card form-card" action="{{ url_for('thank_you_t2') }}" method="get">
+    <div class="field">
+      <label for="first">First bit</label>
+      <input id="first" name="first" type="text" placeholder="e.g., GOOD" required>
+    </div>
+
+    <div class="field">
+      <label for="second">Last bit</label>
+      <input id="second" name="second" type="text" placeholder="e.g., ..." required>
+    </div>
+
+    <div class="field">
+      <label for="note">Message</label>
+      <textarea id="note" name="note" rows="4" placeholder="Anything you want to say…"></textarea>
+    </div>
+
+    <button type="submit">Make the mashup</button>
+  </form>
+
+{% endblock %}

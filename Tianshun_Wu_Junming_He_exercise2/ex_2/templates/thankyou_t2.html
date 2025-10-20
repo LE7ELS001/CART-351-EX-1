@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+
+  <h3>Your message</h3>
+  <p class="h-subtle">Here’s the transformed result below.</p>
+
+  <div class="card">
+    <h4>Original</h4>
+    <div class="code-line">{{ original }}</div>
+  </div>
+
+  <div class="card accent">
+    <h4>Processed</h4>
+    <div class="code-line" style="font-size:1.15rem;">{{ processed }}</div>
+  </div>
+
+  <a href="{{ url_for('t2') }}" style="
+    display:inline-block; 
+    margin-top:10px;
+    padding:10px 14px;
+    border-radius:10px;
+    background:linear-gradient(180deg, #a78bfa, #7c3aed);
+    color:#fff;
+    text-decoration:none;">
+    ← Back
+  </a>
+
+{% endblock %}
