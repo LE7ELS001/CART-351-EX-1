@@ -1,0 +1,43 @@
+{# CART 351 — Exercise III | t2.html  #}
+{% extends "base.html" %}
+{% block title %}/t2 — Capture & Fetch{% endblock %}
+{% block content %}
+  <section>
+    <h2>Capture & POST & SAVE</h2>
+    <p>Move your mouse over the canvas, pick a color + mood, then click <em>Send</em>.</p>
+
+    <!-- [1] Creative capture UI -->
+    <div class="panel">
+      <canvas id="draw" width="560" height="300" class="canvas"></canvas>
+
+      <div class="controls">
+        <label>Accent Color:
+          <input type="color" id="accent" value="#8f7aff">
+        </label>
+        <label>Mood:
+          <select id="mood">
+            <option>🙂 calm</option>
+            <option>🤩 excited</option>
+            <option>😴 sleepy</option>
+            <option>🤔 curious</option>
+            <option>😎 chill</option>
+          </select>
+        </label>
+        <button id="sendBtn">Send</button>
+      </div>
+    </div>
+
+    <!-- [2] Creative response area -->
+    <div id="toast" class="toast" aria-live="polite"></div>
+
+<hr style="margin:20px 0;opacity:.4;">
+<h3 style="margin:8px 0;">Recent Submissions</h3>
+<ul id="recent" style="list-style:none;padding-left:0;margin:0;display:grid;gap:8px;"></ul>
+
+  </section>
+
+  <!-- [3] Page script -->
+  <script src="{{ url_for('static', filename='js/t2.js') }}"></script>
+
+  
+{% endblock %}

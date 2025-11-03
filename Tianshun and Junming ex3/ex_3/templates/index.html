@@ -1,0 +1,13 @@
+{# CART 351 — Exercise III | index.html  #}
+{% extends "base.html" %}
+{% block title %}Home — EX3{% endblock %}
+{% block content %}
+  <section class="hero">
+    <h1>[EX3]</h1>
+    <p>
+      Use the nav to open <strong>t2 — Capture & Fetch</strong> and try the interactive capture!<br>
+      This exercise posts data via <code>fetch()</code>, saves to <code>files/data.txt</code>, and displays a creative message.
+    </p>
+    <p><a class="cta" href="{{ url_for('t2') }}">Go to t2</a></p>
+  </section>
+{% endblock %}

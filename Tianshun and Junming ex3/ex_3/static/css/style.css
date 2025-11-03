@@ -1,0 +1,154 @@
+/* CART 351 — Exercise III | style.css (beautified) */
+:root{
+  --bg:#0d0f14;            
+  --fg:#e8ebf3;
+  --muted:#a1aab9;
+  --card:#151922;          
+  --accent:#7c5cff;       
+  --border:#2a2f3a;
+  --ring:#99a2ff;
+  --shadow: 0 10px 40px rgba(0,0,0,.35);
+}
+
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  color:var(--fg);
+  background:
+    radial-gradient(1400px 700px at 12% -10%, #1b2030 0%, transparent 60%),
+    radial-gradient(1600px 800px at 100% -20%, #161b28 0%, transparent 60%),
+    linear-gradient(180deg, #0b0d12 0%, #0d0f14 100%);
+  font:16px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* ---------- Nav ---------- */
+.nav{
+  position:sticky; top:0; z-index:20;
+  display:flex; gap:1rem; align-items:center;
+  padding:10px 16px;
+  background:rgba(10,12,18,.55);
+  border-bottom:1px solid rgba(255,255,255,.04);
+  backdrop-filter:saturate(130%) blur(10px);
+}
+.nav a{
+  color:var(--fg); text-decoration:none; opacity:.85;
+  padding:6px 10px; border-radius:10px;
+  transition:opacity .15s ease, background-color .15s ease, transform .15s ease;
+}
+.nav a:hover{ opacity:1; background:rgba(255,255,255,.04); }
+.nav a:active{ transform:translateY(1px); }
+.nav a:focus-visible{
+  outline:2px solid var(--ring);
+  outline-offset:2px;
+}
+
+/* ---------- Layout ---------- */
+.container{ max-width:960px; margin:40px auto; padding:0 18px; }
+.hero{
+  background:linear-gradient(180deg, #171c27 0%, #131722 100%);
+  padding:26px; border-radius:18px; box-shadow:var(--shadow);
+  border:1px solid var(--border);
+}
+
+.panel{
+  background:linear-gradient(180deg, #151a25 0%, #131824 100%);
+  padding:18px; border-radius:18px; box-shadow: var(--shadow);
+  border:1px solid var(--border);
+  display:grid; gap:14px;
+}
+.panel:focus-within{
+  outline:2px solid var(--ring);
+  outline-offset:2px;
+}
+
+/* ---------- Canvas & controls ---------- */
+.canvas{
+  width:100%; height:300px; border-radius:14px;
+  background:
+    conic-gradient(from 180deg at 60% 40%, #10131a, #171c27 60%, #10131a);
+  border:1px solid var(--border);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.03), 0 12px 32px rgba(0,0,0,.35);
+  transition: box-shadow .2s ease, border-color .2s ease;
+}
+.canvas:hover{ border-color:#394055; }
+.controls{
+  display:flex; gap:12px; align-items:center; flex-wrap:wrap;
+}
+.controls label{
+  display:flex; gap:8px; align-items:center;
+  background:#0f131c; padding:8px 10px; border-radius:12px;
+  border:1px solid var(--border);
+}
+.controls input[type="color"]{
+  width:32px; height:28px; padding:0; border:none; background:none; border-radius:6px; cursor:pointer;
+}
+
+/* ---------- Buttons ---------- */
+button#sendBtn{
+  padding:10px 16px; border-radius:12px;
+  border:1px solid var(--border);
+  background:linear-gradient(180deg, #131826 0%, #0f1421 100%);
+  color:var(--fg); cursor:pointer;
+  transition:border-color .15s ease, transform .06s ease, box-shadow .15s ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+}
+button#sendBtn:hover{ border-color:#3d4661; box-shadow: 0 8px 24px rgba(0,0,0,.32); }
+button#sendBtn:active{ transform:translateY(1px); }
+button#sendBtn:focus-visible{ outline:2px solid var(--ring); outline-offset:2px; }
+
+/* ---------- Toast ---------- */
+.toast{
+  margin-top:14px; padding:14px 16px; border-radius:14px;
+  background:#0f131c; border:1px solid var(--border); min-height:44px;
+  display:flex; align-items:center; white-space:pre-line;
+  transition: box-shadow .2s ease, border-color .2s ease, background .2s ease;
+}
+.toast.success{
+  --accent: var(--accent);
+  border-color: color-mix(in lab, var(--accent) 65%, transparent);
+  box-shadow: 0 0 28px -6px color-mix(in lab, var(--accent) 80%, transparent);
+}
+.toast.error{
+  border-color:#ff6467;
+  box-shadow: 0 0 28px -6px rgba(255,100,103,.85);
+}
+
+/* ---------- Footer ---------- */
+.footer{ opacity:.65; text-align:center; padding:26px; }
+
+/* ---------- Utils ---------- */
+.kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size:.9rem; padding:2px 6px; border-radius:6px;
+  border:1px solid var(--border); background:#0f131c; color:var(--fg);
+}
+
+/* ---------- Scrollbar (Chromium/WebKit) ---------- */
+*::-webkit-scrollbar{ width:10px; height:10px; }
+*::-webkit-scrollbar-track{ background:transparent; }
+*::-webkit-scrollbar-thumb{
+  background:#2a3040; border-radius:10px; border:2px solid transparent; background-clip:content-box;
+}
+*::-webkit-scrollbar-thumb:hover{ background:#37405a; background-clip:content-box; }
+
+/* ---------- Responsive ---------- */
+@media (max-width:720px){
+  .container{ margin:28px auto; }
+  .canvas{ height:240px; }
+  .hero{ padding:20px; }
+  .panel{ padding:14px; }
+  .nav{ gap:.6rem; padding:10px 12px; }
+}
+
+/* ---------- Motion reduce ---------- */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration:0.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.001ms !important;
+    scroll-behavior:auto !important;
+  }
+}
