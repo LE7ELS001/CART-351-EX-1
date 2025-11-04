@@ -37,7 +37,7 @@ window.addEventListener("pointerup", () => drawing = false);
 function addPoint(e) {
   const rect = cvs.getBoundingClientRect();
   path.push({ x: e.clientX - rect.left, y: e.clientY - rect.top, t: Date.now() });
-  if (path.length > 256) path.shift(); 
+  if (path.length > 256) path.shift();
 }
 
 function draw() {
@@ -65,7 +65,7 @@ async function sendData() {
   };
 
   try {
-    const res = await fetch("/postData", {
+    const res = await fetch("/postDataFetch", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body)
@@ -73,7 +73,7 @@ async function sendData() {
     const json = await res.json();
     if (json.ok) {
       showToast(`${json.message} \n mood: ${body.mood} | points: ${body.path.length}`);
-      loadRecent(); 
+      loadRecent();
     } else {
       showToast(json.message || "Unknown error", true);
     }
@@ -194,7 +194,7 @@ function drawPathOnCanvas(canvas, path, strokeColor) {
 let modal, modalBg, modalCanvas, modalCtx, modalClose;
 
 function ensureModal() {
-  if (modal) return; 
+  if (modal) return;
 
   modalBg = document.createElement("div");
   modalBg.style.position = "fixed";
@@ -251,7 +251,7 @@ function ensureModal() {
   modal.appendChild(wrap);
 
   modalCanvas = document.createElement("canvas");
-  modalCanvas.width = 960;  
+  modalCanvas.width = 960;
   modalCanvas.height = 540;
   modalCanvas.style.maxWidth = "100%";
   modalCanvas.style.borderRadius = "10px";
@@ -271,7 +271,7 @@ function ensureModal() {
   modalBg.addEventListener("click", hide);
   modalClose.addEventListener("click", hide);
 
-  modal.show = function() {
+  modal.show = function () {
     modalBg.style.pointerEvents = "auto";
     modal.style.pointerEvents = "auto";
     modalBg.style.opacity = "1";

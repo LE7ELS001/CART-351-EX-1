@@ -46,7 +46,7 @@ def t2():
 
 
 # [6] POST endpoint to save data
-@app.route("/postData", methods=["POST"])
+@app.route("/postDataFetch", methods=["POST"])
 def post_data():
     payload = request.get_json(silent=True) or {}
     payload["server_timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
