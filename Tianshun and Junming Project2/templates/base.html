@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>{{ title or "Collective Groove" }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script defer src="https://unpkg.com/tone@14.8.49/build/Tone.js"></script>
+  <script defer src="{{ url_for('static', filename='main.js') }}"></script>
+</head>
+<body>
+  <header>
+    <h1>Collective Groove</h1>
+    <p class="subtitle">Only the latest 5 beats drive the drums.</p>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  <footer>
+    <small>CART 351 — Project II — {{ title or "Collective Groove" }}</small>
+  </footer>
+</body>
+</html>

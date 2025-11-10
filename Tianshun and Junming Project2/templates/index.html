@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="panel">
+  <h2>Your Beat</h2>
+  <div class="controls">
+    <input id="name" type="text" placeholder="Name (optional)"/>
+    <button id="clear">Clear Beat</button>
+    <button id="random">Random Beat</button>
+    <button id="preview">Preview Beat</button>
+    <button id="submit">Submit Beat</button>
+  </div>
+  <div id="grid" class="grid"></div>
+  <p class="hint">Click cells to toggle. 6 tracks × 16 steps.</p>
+</section>
+
+<section class="panel">
+  <h2>Collective Drums (latest 5)</h2>
+  <canvas id="heatmap" width="800" height="240"></canvas>
+  <div class="meta">
+    <span id="countLabel">Total submissions: 0</span>
+    <span id="windowLabel">Active window: 0</span>
+    <button id="refresh">Refresh Data</button>
+    <button id="play">Play Drums</button>
+    <button id="stop">Stop</button>
+    <button id="clearJson" style="background:#d44;color:white;">Clear All Data</button>
+  </div>
+  <div id="recentList" class="melody-list"></div>
+</section>
+
+{% endblock %}
