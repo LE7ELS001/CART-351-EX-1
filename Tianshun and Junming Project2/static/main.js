@@ -1,21 +1,21 @@
 const ROWS = 6, COLS = 16;
-let grid = Array.from({length: ROWS}, () => Array(COLS).fill(0));
-let counts = Array.from({length: ROWS}, () => Array(COLS).fill(0));
+let grid = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
+let counts = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
 let totalSubmissions = 0;
 let activeWindow = 0;
 let recent = [];
 const $ = sel => document.querySelector(sel);
 
 let visStep = -1;
-function getColCells(c){
+function getColCells(c) {
   return Array.from(document.querySelectorAll(`.cell[data-c="${c}"]`));
 }
-function highlightStep(c){
+function highlightStep(c) {
   if (visStep >= 0) getColCells(visStep).forEach(el => el.classList.remove("now"));
   getColCells(c).forEach(el => {
     el.classList.add("now");
     el.classList.add("flash");
-    setTimeout(()=> el.classList.remove("flash"), 160);
+    setTimeout(() => el.classList.remove("flash"), 160);
   });
   visStep = c;
 }
@@ -134,34 +134,34 @@ function ensureDrumSynths() {
   return drumSynths;
 }
 
-function tuneRealtime(){
-  try { Tone.context.latencyHint = "interactive"; } catch(e){}
-  Tone.Draw.anticipation = 0.02; 
+function tuneRealtime() {
+  try { Tone.context.latencyHint = "interactive"; } catch (e) { }
+  Tone.Draw.anticipation = 0.02;
 }
 
-async function playPreview(){
+async function playPreview() {
   await Tone.start();
   ensureDrumSynths();
   tuneRealtime();
   if (drumLoop) { drumLoop.stop(); drumLoop.dispose(); drumLoop = null; }
   if (previewLoop) previewLoop.dispose();
-  document.querySelectorAll(".cell.now").forEach(el=>el.classList.remove("now"));
+  document.querySelectorAll(".cell.now").forEach(el => el.classList.remove("now"));
   visStep = -1;
   let step = 0;
-  previewLoop = new Tone.Loop((time)=>{
-    const s = step; 
-    Tone.Draw.schedule(()=>highlightStep(s), time);
-    for (let r=0; r<ROWS; r++){
-      if (grid[r][s]){
-        if (r===0) drumSynths[0].triggerAttackRelease("C2", "8n", time, 0.7);
-        else if (r===1) drumSynths[1].triggerAttackRelease("8n", time, 0.6);
-        else if (r===2) drumSynths[2].triggerAttackRelease("16n", time, 0.5);
-        else if (r===3) drumSynths[3].triggerAttackRelease("C4", "16n", time, 0.5);
-        else if (r===4) drumSynths[4].triggerAttackRelease("G2", "8n", time, 0.55);
-        else if (r===5) drumSynths[5].triggerAttackRelease("C5", "32n", time, 0.45);
+  previewLoop = new Tone.Loop((time) => {
+    const s = step;
+    Tone.Draw.schedule(() => highlightStep(s), time);
+    for (let r = 0; r < ROWS; r++) {
+      if (grid[r][s]) {
+        if (r === 0) drumSynths[0].triggerAttackRelease("C2", "8n", time, 0.7);
+        else if (r === 1) drumSynths[1].triggerAttackRelease("8n", time, 0.6);
+        else if (r === 2) drumSynths[2].triggerAttackRelease("E4", "16n", time, 0.5);
+        else if (r === 3) drumSynths[3].triggerAttackRelease("C4", "16n", time, 0.5);
+        else if (r === 4) drumSynths[4].triggerAttackRelease("G2", "8n", time, 0.55);
+        else if (r === 5) drumSynths[5].triggerAttackRelease("C5", "32n", time, 0.45);
       }
     }
-    step = (step+1) % COLS;
+    step = (step + 1) % COLS;
   }, "16n");
   if (!Tone.Transport.state || Tone.Transport.state === "stopped") Tone.Transport.bpm.value = 110;
   previewLoop.start(0);
@@ -177,24 +177,24 @@ async function playDrums() {
   for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) max = Math.max(max, counts[r][c]);
   const vel = (r, c) => (max ? counts[r][c] / max : 0);
   if (drumLoop) drumLoop.dispose();
-  document.querySelectorAll(".cell.now").forEach(el=>el.classList.remove("now"));
+  document.querySelectorAll(".cell.now").forEach(el => el.classList.remove("now"));
   visStep = -1;
   let step = 0;
-  drumLoop = new Tone.Loop((time)=>{
-    const s = step; 
-    Tone.Draw.schedule(()=>highlightStep(s), time);
-    for (let r=0; r<ROWS; r++){
+  drumLoop = new Tone.Loop((time) => {
+    const s = step;
+    Tone.Draw.schedule(() => highlightStep(s), time);
+    for (let r = 0; r < ROWS; r++) {
       const v = vel(r, s);
-      if (v > 0.01){
-        if (r===0) drumSynths[0].triggerAttackRelease("C2", "8n", time, 0.6*v);
-        else if (r===1) drumSynths[1].triggerAttackRelease("8n", time, 0.6*v);
-        else if (r===2) drumSynths[2].triggerAttackRelease("16n", time, 0.5*v);
-        else if (r===3) drumSynths[3].triggerAttackRelease("C4", "16n", time, 0.4*v);
-        else if (r===4) drumSynths[4].triggerAttackRelease("G2", "8n", time, 0.5*v);
-        else if (r===5) drumSynths[5].triggerAttackRelease("C5", "32n", time, 0.4*v);
+      if (v > 0.01) {
+        if (r === 0) drumSynths[0].triggerAttackRelease("C2", "8n", time, 0.6 * v);
+        else if (r === 1) drumSynths[1].triggerAttackRelease("8n", time, 0.6 * v);
+        else if (r === 2) drumSynths[2].triggerAttackRelease("E4", "16n", time, 0.5 * v);
+        else if (r === 3) drumSynths[3].triggerAttackRelease("C4", "16n", time, 0.4 * v);
+        else if (r === 4) drumSynths[4].triggerAttackRelease("G2", "8n", time, 0.5 * v);
+        else if (r === 5) drumSynths[5].triggerAttackRelease("C5", "32n", time, 0.4 * v);
       }
     }
-    step = (step+1) % COLS;
+    step = (step + 1) % COLS;
   }, "16n");
   if (!Tone.Transport.state || Tone.Transport.state === "stopped") Tone.Transport.bpm.value = 110;
   drumLoop.start(0);
@@ -205,7 +205,7 @@ function stopAudio() {
   if (drumLoop) { drumLoop.stop(); drumLoop.dispose(); drumLoop = null; }
   if (previewLoop) { previewLoop.stop(); previewLoop.dispose(); previewLoop = null; }
   Tone.Transport.stop();
-  document.querySelectorAll(".cell.now").forEach(el=>el.classList.remove("now"));
+  document.querySelectorAll(".cell.now").forEach(el => el.classList.remove("now"));
   visStep = -1;
 }
 
@@ -220,11 +220,11 @@ function renderRecent() {
   });
 }
 
-async function clearServerData(){
+async function clearServerData() {
   if (!confirm("Clear all stored data?")) return;
   const res = await fetch("/clear", { method: "POST" });
   const data = await res.json();
-  if (data.ok){
+  if (data.ok) {
     await fetchData();
     alert("All data cleared.");
   } else {
