@@ -10,15 +10,18 @@ DATA_DIR.mkdir(exist_ok=True)
 _lock = threading.Lock()
 
 def _init_store():
+    # Ensure the JSON file exists on startup
     if not DATA_FILE.exists():
         with DATA_FILE.open("w", encoding="utf-8") as f:
             json.dump({"submissions": []}, f, ensure_ascii=False, indent=2)
 
 def _load():
+    # Helper function to load data from the JSON file
     with DATA_FILE.open("r", encoding="utf-8") as f:
         return json.load(f)
 
 def _save(data):
+    # Helper function to save data to the JSON file
     with DATA_FILE.open("w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
@@ -27,6 +30,7 @@ def index():
     return render_template("index.html", title="Collective Groove")
 
 def _is_6x16_pattern(pat):
+    # Ensure pattern data is in the expected 6x16 shape
     return isinstance(pat, list) and len(pat) == 6 and all(isinstance(r, list) and len(r) == 16 for r in pat)
 
 @app.route("/submit", methods=["POST"])
@@ -60,6 +64,7 @@ def data():
     window = list(reversed(subs))[:5]
     window = list(reversed(window))
     rows, cols = 6, 16
+    # Create a 6x16 grid that counts activations per cell
     counts = [[0]*cols for _ in range(rows)]
     for s in window:
         pat = s.get("pattern", [])
@@ -83,6 +88,7 @@ def data():
 
 
 @app.route("/clear", methods=["POST"])
+# Clear all submissions from the JSON file
 def clear_data():
     with _lock:
         _save({"submissions": []})

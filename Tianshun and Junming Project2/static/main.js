@@ -1,18 +1,18 @@
 const ROWS = 6, COLS = 16;
-let grid = Array.from({length: ROWS}, () => Array(COLS).fill(0));
+let grid = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
 let totalSubmissions = 0;
 let activeWindow = 0;
 let recent = [];
 const $ = sel => document.querySelector(sel);
 
 let visStep = -1;
-function getColCells(c){ return Array.from(document.querySelectorAll(`.cell[data-c="${c}"]`)); }
-function highlightStep(c){
+function getColCells(c) { return Array.from(document.querySelectorAll(`.cell[data-c="${c}"]`)); }
+function highlightStep(c) {
   if (visStep >= 0) getColCells(visStep).forEach(el => el.classList.remove("now"));
   getColCells(c).forEach(el => {
     el.classList.add("now");
     el.classList.add("flash");
-    setTimeout(()=> el.classList.remove("flash"), 160);
+    setTimeout(() => el.classList.remove("flash"), 160);
   });
   visStep = c;
 }
@@ -58,6 +58,8 @@ window.addEventListener("DOMContentLoaded", () => {
   $("#play").onclick = playDrums;
   $("#stop").onclick = stopAudio;
   const clearBtn = $("#clearJson"); if (clearBtn) clearBtn.onclick = clearServerData;
+
+  // Fetch initial data on load
   fetchData();
 });
 
@@ -121,39 +123,39 @@ let drumLoop = null;
 function createSynths(kit) {
   if (kit === "8bit") {
     return [
-      new Tone.MembraneSynth({ octaves: 2, pitchDecay: 0.02, envelope:{attack:0.001,decay:0.2,sustain:0,release:0.05} }).toDestination(),
-      new Tone.NoiseSynth({ noise:{type:'white'}, envelope:{attack:0.001,decay:0.12,sustain:0} }).toDestination(),
-      new Tone.MetalSynth({ frequency:400, modulationIndex:8, resonance:300, harmonicity:10 }).toDestination(),
-      new Tone.Synth({ oscillator:{type:'square'}, envelope:{attack:0.005,decay:0.08,sustain:0.1,release:0.1} }).toDestination(),
+      new Tone.MembraneSynth({ octaves: 2, pitchDecay: 0.02, envelope: { attack: 0.001, decay: 0.2, sustain: 0, release: 0.05 } }).toDestination(),
+      new Tone.NoiseSynth({ noise: { type: 'white' }, envelope: { attack: 0.001, decay: 0.12, sustain: 0 } }).toDestination(),
+      new Tone.MetalSynth({ frequency: 400, modulationIndex: 8, resonance: 300, harmonicity: 10 }).toDestination(),
+      new Tone.Synth({ oscillator: { type: 'square' }, envelope: { attack: 0.005, decay: 0.08, sustain: 0.1, release: 0.1 } }).toDestination(),
       new Tone.MembraneSynth({ octaves: 1.5, pitchDecay: 0.04 }).toDestination(),
-      new Tone.Synth({ oscillator:{type:'square'} }).toDestination()
+      new Tone.Synth({ oscillator: { type: 'square' } }).toDestination()
     ];
   } else if (kit === "techno") {
     return [
       new Tone.MembraneSynth({ pitchDecay: 0.01, octaves: 3 }).toDestination(),
-      new Tone.NoiseSynth({ envelope:{attack:0.001,decay:0.08,sustain:0} }).toDestination(),
-      new Tone.MetalSynth({ resonance:400, harmonicity:5.1, modulationIndex: 16 }).toDestination(),
-      new Tone.Synth({ oscillator:{type:'sawtooth'}, envelope:{attack:0.003,decay:0.07,sustain:0.05,release:0.08} }).toDestination(),
-      new Tone.MembraneSynth({ pitchDecay:0.02, octaves:2.5 }).toDestination(),
-      new Tone.Synth({ oscillator:{type:'pulse'} }).toDestination()
+      new Tone.NoiseSynth({ envelope: { attack: 0.001, decay: 0.08, sustain: 0 } }).toDestination(),
+      new Tone.MetalSynth({ resonance: 400, harmonicity: 5.1, modulationIndex: 16 }).toDestination(),
+      new Tone.Synth({ oscillator: { type: 'sawtooth' }, envelope: { attack: 0.003, decay: 0.07, sustain: 0.05, release: 0.08 } }).toDestination(),
+      new Tone.MembraneSynth({ pitchDecay: 0.02, octaves: 2.5 }).toDestination(),
+      new Tone.Synth({ oscillator: { type: 'pulse' } }).toDestination()
     ];
   } else if (kit === "acoustic") {
     return [
-      new Tone.MembraneSynth({ octaves: 2, pitchDecay: 0.03, envelope:{attack:0.002,decay:0.25,sustain:0,release:0.12} }).toDestination(),
-      new Tone.NoiseSynth({ noise:{type:'pink'}, envelope:{attack:0.001,decay:0.2,sustain:0} }).toDestination(),
-      new Tone.MetalSynth({ resonance:200, harmonicity:4.5 }).toDestination(),
-      new Tone.Synth({ oscillator:{type:'triangle'}, envelope:{attack:0.002,decay:0.1,sustain:0.05,release:0.15} }).toDestination(),
-      new Tone.MembraneSynth({ pitchDecay:0.025 }).toDestination(),
-      new Tone.Synth({ oscillator:{type:'triangle'} }).toDestination()
+      new Tone.MembraneSynth({ octaves: 2, pitchDecay: 0.03, envelope: { attack: 0.002, decay: 0.25, sustain: 0, release: 0.12 } }).toDestination(),
+      new Tone.NoiseSynth({ noise: { type: 'pink' }, envelope: { attack: 0.001, decay: 0.2, sustain: 0 } }).toDestination(),
+      new Tone.MetalSynth({ resonance: 200, harmonicity: 4.5 }).toDestination(),
+      new Tone.Synth({ oscillator: { type: 'triangle' }, envelope: { attack: 0.002, decay: 0.1, sustain: 0.05, release: 0.15 } }).toDestination(),
+      new Tone.MembraneSynth({ pitchDecay: 0.025 }).toDestination(),
+      new Tone.Synth({ oscillator: { type: 'triangle' } }).toDestination()
     ];
   } else if (kit === "trap") {
     return [
-      new Tone.MembraneSynth({ frequency: 45, octaves: 4, pitchDecay: 0.06, envelope:{attack:0.001,decay:0.5,sustain:0,release:0.4} }).toDestination(),
-      new Tone.NoiseSynth({ envelope:{attack:0.001,decay:0.15,sustain:0} }).toDestination(),
-      new Tone.MetalSynth({ resonance:500, harmonicity:6.5 }).toDestination(),
-      new Tone.Synth({ oscillator:{type:'square'}, envelope:{attack:0.002,decay:0.12,sustain:0.05,release:0.12} }).toDestination(),
-      new Tone.MembraneSynth({ pitchDecay:0.05 }).toDestination(),
-      new Tone.Synth({ oscillator:{type:'pulse'}, envelope:{attack:0.001,decay:0.05,sustain:0,release:0.05} }).toDestination()
+      new Tone.MembraneSynth({ frequency: 45, octaves: 4, pitchDecay: 0.06, envelope: { attack: 0.001, decay: 0.5, sustain: 0, release: 0.4 } }).toDestination(),
+      new Tone.NoiseSynth({ envelope: { attack: 0.001, decay: 0.15, sustain: 0 } }).toDestination(),
+      new Tone.MetalSynth({ resonance: 500, harmonicity: 6.5 }).toDestination(),
+      new Tone.Synth({ oscillator: { type: 'square' }, envelope: { attack: 0.002, decay: 0.12, sustain: 0.05, release: 0.12 } }).toDestination(),
+      new Tone.MembraneSynth({ pitchDecay: 0.05 }).toDestination(),
+      new Tone.Synth({ oscillator: { type: 'pulse' }, envelope: { attack: 0.001, decay: 0.05, sustain: 0, release: 0.05 } }).toDestination()
     ];
   } else {
     return [
@@ -167,34 +169,34 @@ function createSynths(kit) {
   }
 }
 
-function tuneRealtime(){
-  try { Tone.context.latencyHint = "interactive"; } catch(e){}
+function tuneRealtime() {
+  try { Tone.context.latencyHint = "interactive"; } catch (e) { }
   Tone.Draw.anticipation = 0.02;
 }
 
-async function playPreview(){
+async function playPreview() {
   await Tone.start();
   tuneRealtime();
   if (drumLoop) { drumLoop.stop(); drumLoop.dispose(); drumLoop = null; }
   if (previewLoop) previewLoop.dispose();
   const synths = createSynths($("#kit")?.value || "standard");
-  document.querySelectorAll(".cell.now").forEach(el=>el.classList.remove("now"));
+  document.querySelectorAll(".cell.now").forEach(el => el.classList.remove("now"));
   visStep = -1;
   let step = 0;
-  previewLoop = new Tone.Loop((time)=>{
+  previewLoop = new Tone.Loop((time) => {
     const s = step;
-    Tone.Draw.schedule(()=>highlightStep(s), time);
-    for (let r=0; r<ROWS; r++){
-      if (grid[r][s]){
-        if (r===0) synths[0].triggerAttackRelease("C2", "8n", time, 0.7);
-        else if (r===1) synths[1].triggerAttackRelease("8n", time, 0.6);
-        else if (r===2) synths[2].triggerAttackRelease("16n", time, 0.5);
-        else if (r===3) synths[3].triggerAttackRelease("C4", "16n", time, 0.5);
-        else if (r===4) synths[4].triggerAttackRelease("G2", "8n", time, 0.55);
-        else if (r===5) synths[5].triggerAttackRelease("C5", "32n", time, 0.45);
+    Tone.Draw.schedule(() => highlightStep(s), time);
+    for (let r = 0; r < ROWS; r++) {
+      if (grid[r][s]) {
+        if (r === 0) synths[0].triggerAttackRelease("C2", "8n", time, 0.7);
+        else if (r === 1) synths[1].triggerAttackRelease("8n", time, 0.6);
+        else if (r === 2) synths[2].triggerAttackRelease("16n", time, 0.5);
+        else if (r === 3) synths[3].triggerAttackRelease("C4", "16n", time, 0.5);
+        else if (r === 4) synths[4].triggerAttackRelease("G2", "8n", time, 0.55);
+        else if (r === 5) synths[5].triggerAttackRelease("C5", "32n", time, 0.45);
       }
     }
-    step = (step+1) % COLS;
+    step = (step + 1) % COLS;
   }, "16n");
   if (!Tone.Transport.state || Tone.Transport.state === "stopped") Tone.Transport.bpm.value = 110;
   previewLoop.start(0);
@@ -213,29 +215,29 @@ async function playDrums() {
   }));
   const synthSets = participants.map(p => createSynths(p.kit));
 
-  document.querySelectorAll(".cell.now").forEach(el=>el.classList.remove("now"));
+  document.querySelectorAll(".cell.now").forEach(el => el.classList.remove("now"));
   visStep = -1;
   let step = 0;
 
-  drumLoop = new Tone.Loop((time)=>{
+  drumLoop = new Tone.Loop((time) => {
     const s = step;
-    Tone.Draw.schedule(()=>highlightStep(s), time);
-    for (let i=0; i<participants.length; i++){
+    Tone.Draw.schedule(() => highlightStep(s), time);
+    for (let i = 0; i < participants.length; i++) {
       const pat = participants[i].pattern;
       const synths = synthSets[i];
       if (!pat || !pat.length) continue;
-      for (let r=0; r<ROWS; r++){
-        if (pat[r][s]){
-          if (r===0) synths[0].triggerAttackRelease("C2", "8n", time, 0.7);
-          else if (r===1) synths[1].triggerAttackRelease("8n", time, 0.6);
-          else if (r===2) synths[2].triggerAttackRelease("16n", time, 0.5);
-          else if (r===3) synths[3].triggerAttackRelease("C4", "16n", time, 0.4);
-          else if (r===4) synths[4].triggerAttackRelease("G2", "8n", time, 0.5);
-          else if (r===5) synths[5].triggerAttackRelease("C5", "32n", time, 0.4);
+      for (let r = 0; r < ROWS; r++) {
+        if (pat[r][s]) {
+          if (r === 0) synths[0].triggerAttackRelease("C2", "8n", time, 0.7);
+          else if (r === 1) synths[1].triggerAttackRelease("8n", time, 0.6);
+          else if (r === 2) synths[2].triggerAttackRelease("16n", time, 0.5);
+          else if (r === 3) synths[3].triggerAttackRelease("C4", "16n", time, 0.4);
+          else if (r === 4) synths[4].triggerAttackRelease("G2", "8n", time, 0.5);
+          else if (r === 5) synths[5].triggerAttackRelease("C5", "32n", time, 0.4);
         }
       }
     }
-    step = (step+1) % COLS;
+    step = (step + 1) % COLS;
   }, "16n");
 
   if (!Tone.Transport.state || Tone.Transport.state === "stopped") Tone.Transport.bpm.value = 110;
@@ -247,7 +249,7 @@ function stopAudio() {
   if (drumLoop) { drumLoop.stop(); drumLoop.dispose(); drumLoop = null; }
   if (previewLoop) { previewLoop.stop(); previewLoop.dispose(); previewLoop = null; }
   Tone.Transport.stop();
-  document.querySelectorAll(".cell.now").forEach(el=>el.classList.remove("now"));
+  document.querySelectorAll(".cell.now").forEach(el => el.classList.remove("now"));
   visStep = -1;
 }
 
@@ -266,11 +268,11 @@ function renderRecent() {
   });
 }
 
-async function clearServerData(){
+async function clearServerData() {
   if (!confirm("Clear all stored data?")) return;
   const res = await fetch("/clear", { method: "POST" });
   const data = await res.json();
-  if (data.ok){
+  if (data.ok) {
     await fetchData();
     alert("All data cleared.");
   } else {
@@ -283,20 +285,20 @@ let recorder = null;
 let recBlob = null;
 let recUrl = null;
 
-function ensureRecorder(){
-  if (!recorder){
+function ensureRecorder() {
+  if (!recorder) {
     recorder = new Tone.Recorder();
     Tone.getDestination().connect(recorder);
   }
   return recorder;
 }
 
-async function startRecording(){
+async function startRecording() {
   await Tone.start();
   ensureRecorder();
   const a = $("#recDownload");
   a.style.display = "none";
-  if (recUrl){ URL.revokeObjectURL(recUrl); recUrl = null; }
+  if (recUrl) { URL.revokeObjectURL(recUrl); recUrl = null; }
   recBlob = null;
   recorder.start();
   $("#recStart").textContent = "Recording...";
@@ -304,7 +306,7 @@ async function startRecording(){
   $("#recStop").disabled = false;
 }
 
-async function stopRecording(){
+async function stopRecording() {
   if (!recorder) return;
   const blob = await recorder.stop();
   recBlob = blob;
@@ -317,10 +319,10 @@ async function stopRecording(){
   $("#recStop").disabled = true;
 }
 
-window.addEventListener("DOMContentLoaded", ()=>{
+window.addEventListener("DOMContentLoaded", () => {
   const btnStart = $("#recStart");
   const btnStop = $("#recStop");
-  if (btnStart && btnStop){
+  if (btnStart && btnStop) {
     btnStop.disabled = true;
     btnStart.onclick = startRecording;
     btnStop.onclick = stopRecording;
