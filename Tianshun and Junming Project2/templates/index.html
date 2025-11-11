@@ -5,12 +5,22 @@
   <h2>Your Beat</h2>
   <div class="controls">
     <input id="name" type="text" placeholder="Name (optional)"/>
+    <select id="kit">
+      <option value="standard">Standard Kit</option>
+      <option value="8bit">8-bit Kit</option>
+      <option value="techno">Techno Kit</option>
+      <option value="acoustic">Acoustic Kit</option>
+      <option value="trap">Trap 808 Kit</option>
+    </select>
     <button id="clear">Clear Beat</button>
     <button id="random">Random Beat</button>
     <button id="preview">Preview Beat</button>
-    <button id="submit">Submit Beat</button>
   </div>
   <div id="grid" class="grid"></div>
+  <textarea id="message" placeholder="Message (optional)" style="width:100%;height:70px;margin-top:10px;font-family:ui-monospace,Consolas,monospace;"></textarea>
+  <div class="controls" style="margin-top:0.6rem;">
+    <button id="submit">Submit Beat</button>
+  </div>
   <p class="hint">Click cells to toggle. 6 tracks × 16 steps.</p>
 </section>
 
@@ -18,13 +28,18 @@
   <h2>Collective Drums (latest 5)</h2>
   <canvas id="heatmap" width="800" height="240"></canvas>
   <div class="meta">
-    <span id="countLabel">Total submissions: 0</span>
-    <span id="windowLabel">Active window: 0</span>
-    <button id="refresh">Refresh Data</button>
-    <button id="play">Play Drums</button>
-    <button id="stop">Stop</button>
-    <button id="clearJson" style="background:#d44;color:white;">Clear All Data</button>
-  </div>
+  <span id="countLabel">Total submissions: 0</span>
+  <span id="windowLabel">Active window: 0</span>
+  <button id="refresh">Refresh Data</button>
+  <button id="play">Play Drums</button>
+  <button id="stop">Stop</button>
+  <button id="clearJson" style="background:#d44;color:white;">Clear All Data</button>
+</div>
+<div class="meta2">
+  <button id="recStart">Start Recording</button>
+  <button id="recStop">Stop Recording</button>
+  <a id="recDownload" href="#" download="collective_groove.wav" style="display:none">Download Recording</a>
+</div>
   <div id="recentList" class="melody-list"></div>
 </section>
 

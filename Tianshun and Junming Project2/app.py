@@ -34,6 +34,8 @@ def submit():
     payload = request.get_json(silent=True) or {}
     pattern = payload.get("pattern")
     name = (payload.get("name") or "").strip()[:32]
+    msg = (payload.get("message") or "").strip()[:200]
+    kit = (payload.get("kit") or "standard").strip().lower()[:20]
     if not _is_6x16_pattern(pattern):
         return jsonify({"ok": False, "error": "bad pattern shape (need 6x16)"}), 400
     norm_pat = [[1 if c else 0 for c in row] for row in pattern]
@@ -43,6 +45,8 @@ def submit():
             "id": str(uuid.uuid4()),
             "when": datetime.datetime.utcnow().isoformat() + "Z",
             "name": name,
+            "message": msg,
+            "kit": kit,
             "pattern": norm_pat
         })
         _save(store)
@@ -63,13 +67,20 @@ def data():
             for r in range(rows):
                 for c in range(cols):
                     counts[r][c] += 1 if pat[r][c] else 0
-    recent_meta = [{"name": s.get("name") or "Anonymous", "when": s.get("when")} for s in reversed(window)]
+    recent_meta = [{
+        "name": s.get("name") or "Anonymous",
+        "when": s.get("when"),
+        "message": s.get("message", ""),
+        "kit": s.get("kit", "standard"),
+        "pattern": s.get("pattern", [])
+    } for s in window]
     return jsonify({
         "total_submissions": len(subs),
         "active_window": len(window),
         "counts": counts,
         "recent": recent_meta
     })
+
 
 @app.route("/clear", methods=["POST"])
 def clear_data():
