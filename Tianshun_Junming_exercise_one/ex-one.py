@@ -5,7 +5,7 @@
 import requests
 
 # (1) API key 
-token = "5c79b9b8cd4fe19b6ddc50a2e385007da3d5cb7b"
+token = ""
 
 # --------------------------
 # PART 1: Search request
