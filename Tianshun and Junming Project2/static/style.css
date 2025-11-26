@@ -178,3 +178,159 @@ footer {
   35%  { transform: scale(1.10); }
   100% { transform: scale(1.00); }
 }
+
+/* ===== KIT SELECT MENU ===== */
+#kit {
+  appearance: none;
+  background: #1b1f2a;
+  color: #f0f0f0;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  padding: 0.45rem 2.2rem 0.45rem 0.8rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  position: relative;
+}
+#kit:hover {
+  background: #232837;
+  border-color: #3fa9f5;
+}
+#kit:focus {
+  outline: none;
+  border-color: #3fa9f5;
+  box-shadow: 0 0 6px #3fa9f580;
+}
+
+/* ===== COMMENT / RECENT SECTION ===== */
+.melody-list {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.melody-card {
+  background: #1b1f2a;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-left: 5px solid #3fa9f5;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  line-height: 1.4;
+  box-shadow: 0 0 8px rgba(0,0,0,0.25);
+  transition: 0.25s;
+}
+.melody-card:hover {
+  transform: translateY(-1px);
+  background: #23283a;
+  border-color: #3fa9f5a0;
+}
+
+.melody-card strong {
+  color: #fff;
+  font-size: 1rem;
+}
+.melody-card em {
+  font-style: normal;
+  color: #3fa9f5;
+  font-weight: 600;
+  margin: 0 6px;
+}
+.melody-card span {
+  color: #999;
+  font-size: 0.85rem;
+}
+.melody-card div {
+  font-size: 0.9rem;
+  margin-top: 4px;
+  color: #b7bbc7;
+}
+
+/* ===== COMMENT INPUT ===== */
+#message {
+  background: #12151d;
+  color: #f0f0f0;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  resize: none;
+  transition: 0.2s;
+}
+#message:focus {
+  outline: none;
+  border-color: #3fa9f5;
+  box-shadow: 0 0 8px #3fa9f550;
+}
+
+/* ===== RECORDING CONTROL BAR ===== */
+.meta2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+  padding: 0.8rem 1rem;
+  background: #151821;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.meta2 button {
+  font-size: 0.95rem;
+  border-radius: 8px;
+  padding: 0.45rem 1rem;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #f0f0f0;
+  background: #1c2030;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.meta2 button:hover {
+  background: #242a3b;
+  border-color: #3fa9f5;
+  color: #3fa9f5;
+}
+
+/* Start / Stop colors */
+#recStart {
+  background: #e44;
+  border-color: #c33;
+  color: #fff;
+  font-weight: 600;
+}
+#recStart:hover {
+  background: #f55;
+  box-shadow: 0 0 8px #f44a;
+}
+#recStop {
+  background: #33384d;
+  border-color: #555b77;
+}
+#recStop:hover {
+  background: #444b64;
+  border-color: #3fa9f5;
+  color: #3fa9f5;
+}
+
+/* Flash animation while recording */
+#recStart.recording {
+  animation: blinkRec 1s infinite;
+}
+@keyframes blinkRec {
+  0%, 50% { background: #e44; box-shadow: 0 0 8px #f44; }
+  51%, 100% { background: #a11; box-shadow: 0 0 4px #a11; }
+}
+
+/* Download link */
+#recDownload {
+  color: #3fa9f5;
+  font-size: 0.9rem;
+  text-decoration: none;
+  margin-left: 0.4rem;
+  border-bottom: 1px dashed transparent;
+  transition: 0.2s;
+}
+#recDownload:hover {
+  border-bottom-color: #3fa9f5;
+  color: #63c0ff;
+}

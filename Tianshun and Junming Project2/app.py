@@ -10,15 +10,18 @@ DATA_DIR.mkdir(exist_ok=True)
 _lock = threading.Lock()
 
 def _init_store():
+    # Ensure the JSON file exists on startup
     if not DATA_FILE.exists():
         with DATA_FILE.open("w", encoding="utf-8") as f:
             json.dump({"submissions": []}, f, ensure_ascii=False, indent=2)
 
 def _load():
+    # Helper function to load data from the JSON file
     with DATA_FILE.open("r", encoding="utf-8") as f:
         return json.load(f)
 
 def _save(data):
+    # Helper function to save data to the JSON file
     with DATA_FILE.open("w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
@@ -27,6 +30,7 @@ def index():
     return render_template("index.html", title="Collective Groove")
 
 def _is_6x16_pattern(pat):
+    # Ensure pattern data is in the expected 6x16 shape
     return isinstance(pat, list) and len(pat) == 6 and all(isinstance(r, list) and len(r) == 16 for r in pat)
 
 @app.route("/submit", methods=["POST"])
@@ -34,6 +38,8 @@ def submit():
     payload = request.get_json(silent=True) or {}
     pattern = payload.get("pattern")
     name = (payload.get("name") or "").strip()[:32]
+    msg = (payload.get("message") or "").strip()[:200]
+    kit = (payload.get("kit") or "standard").strip().lower()[:20]
     if not _is_6x16_pattern(pattern):
         return jsonify({"ok": False, "error": "bad pattern shape (need 6x16)"}), 400
     norm_pat = [[1 if c else 0 for c in row] for row in pattern]
@@ -43,6 +49,8 @@ def submit():
             "id": str(uuid.uuid4()),
             "when": datetime.datetime.utcnow().isoformat() + "Z",
             "name": name,
+            "message": msg,
+            "kit": kit,
             "pattern": norm_pat
         })
         _save(store)
@@ -56,6 +64,7 @@ def data():
     window = list(reversed(subs))[:5]
     window = list(reversed(window))
     rows, cols = 6, 16
+    # Create a 6x16 grid that counts activations per cell
     counts = [[0]*cols for _ in range(rows)]
     for s in window:
         pat = s.get("pattern", [])
@@ -63,7 +72,13 @@ def data():
             for r in range(rows):
                 for c in range(cols):
                     counts[r][c] += 1 if pat[r][c] else 0
-    recent_meta = [{"name": s.get("name") or "Anonymous", "when": s.get("when")} for s in reversed(window)]
+    recent_meta = [{
+        "name": s.get("name") or "Anonymous",
+        "when": s.get("when"),
+        "message": s.get("message", ""),
+        "kit": s.get("kit", "standard"),
+        "pattern": s.get("pattern", [])
+    } for s in window]
     return jsonify({
         "total_submissions": len(subs),
         "active_window": len(window),
@@ -71,7 +86,9 @@ def data():
         "recent": recent_meta
     })
 
+
 @app.route("/clear", methods=["POST"])
+# Clear all submissions from the JSON file
 def clear_data():
     with _lock:
         _save({"submissions": []})
