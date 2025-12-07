@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block title %}
+RONIN SHOWDOWN - LOGIN
+{% endblock %}
+
+{% block head %}
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<video id="bg-video" class="bg-video" autoplay muted loop playsinline>
+    <source src="{{ url_for('static', filename='assets/background/Arizona Desert, U.S.A.mp4') }}" type="video/mp4">
+</video>
+<canvas id="bg-canvas"></canvas>
+
+<!-- Intro -->
+<div id="sf-intro" class="sf-intro">
+    <div class="sf-logo">RONIN SHOWDOWN</div>
+    <div class="sf-sub">PRESS START</div>
+    <div id="sf-copyright" class="sf-copyright">
+        © 2025 Tianshun Wu & Junming He -- Concordia University -- CART 351
+    </div>
+</div>
+
+
+<!-- Intro BGM -->
+<audio
+    id="intro-bgm"
+    src="{{ url_for('static', filename='audio/intro_bgm.mp3') }}"
+    preload="auto"
+    loop
+></audio>
+<div id="crt-overlay" class="crt-overlay"></div>
+
+<div class="ui-container">
+    <div class="login-screen">
+        <div class="center-panel">
+            <h1 class="game-title" id="main-title">RONIN SHOWDOWN</h1>
+
+            <div class="input-group">
+                <label>INSERT COIN (NAME)</label>
+                <input type="text" id="username" placeholder="PLAYER 1..." maxlength="12">
+            </div>
+
+            <div class="input-group">
+                <label>SELECT WARRIOR</label>
+                <div class="warrior-selector">
+                    <button class="warrior-btn selected" data-warrior="A" data-color="#ff0000">
+                        <span class="warrior-letter">A</span>
+                        <span class="warrior-name">RED CAPE</span>
+                    </button>
+                    <button class="warrior-btn" data-warrior="B" data-color="#0000ff">
+                        <span class="warrior-letter">B</span>
+                        <span class="warrior-name">BLUE CAPE</span>
+                    </button>
+                    <button class="warrior-btn" data-warrior="C" data-color="#00ff00">
+                        <span class="warrior-letter">C</span>
+                        <span class="warrior-name">GREEN CAPE</span>
+                    </button>
+                    <button class="warrior-btn" data-warrior="D" data-color="#ffff00">
+                        <span class="warrior-letter">D</span>
+                        <span class="warrior-name">GOLD CAPE</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>SELECT STAGE</label>
+                <div id="map-grid" class="map-grid">
+
+                    <div class="map-card" data-map="Arizona Desert, U.S.A.mp4">
+                        <video src="{{ url_for('static', filename='assets/background/Arizona Desert, U.S.A.mp4') }}" muted loop playsinline></video>
+                        <span class="map-name">ARIZONA DESERT</span>
+                    </div>
+
+                    <div class="map-card" data-map="Ayutthaya Temple Ruins, Thailand.mp4">
+                        <video src="{{ url_for('static', filename='assets/background/Ayutthaya Temple Ruins, Thailand.mp4') }}" muted loop playsinline></video>
+                        <span class="map-name">AYUTTHAYA TEMPLE</span>
+                    </div>
+
+                    <div class="map-card" data-map="Beijing, China.mp4">
+                        <video src="{{ url_for('static', filename='assets/background/Beijing, China.mp4') }}" muted loop playsinline></video>
+                        <span class="map-name">BEIJING</span>
+                    </div>
+
+                    <div class="map-card" data-map="Guiana Highlands, Venezuela.mp4">
+                        <video src="{{ url_for('static', filename='assets/background/Guiana Highlands, Venezuela.mp4') }}" muted loop playsinline></video>
+                        <span class="map-name">GUIANA HIGHLANDS</span>
+                    </div>
+
+                    <div class="map-card" data-map="London Underground, England.mp4">
+                        <video src="{{ url_for('static', filename='assets/background/London Underground, England.mp4') }}" muted loop playsinline></video>
+                        <span class="map-name">LONDON UNDERGROUND</span>
+                    </div>
+
+                    <div class="map-card" data-map="New York, U.S.A.mp4">
+                        <video src="{{ url_for('static', filename='assets/background/New York, U.S.A.mp4') }}" muted loop playsinline></video>
+                        <span class="map-name">NEW YORK</span>
+                    </div>
+
+                    <div class="map-card" data-map="San Francisco Bay, U.S.A.mp4">
+                        <video src="{{ url_for('static', filename='assets/background/San Francisco Bay, U.S.A.mp4') }}" muted loop playsinline></video>
+                        <span class="map-name">SAN FRANCISCO BAY</span>
+                    </div>
+
+                    <div class="map-card" data-map="Setagaya-Ku Ni-Chome, Japan.mp4">
+                        <video src="{{ url_for('static', filename='assets/background/Setagaya-Ku Ni-Chome, Japan.mp4') }}" muted loop playsinline></video>
+                        <span class="map-name">SETAGAYA JAPAN</span>
+                    </div>
+
+                    <div class="map-card" data-map="Suzaku Castle, Japan.mp4">
+                        <video src="{{ url_for('static', filename='assets/background/Suzaku Castle, Japan.mp4') }}" muted loop playsinline></video>
+                        <span class="map-name">SUZAKU CASTLE</span>
+                    </div>
+
+                    <div class="map-card" data-map="Temple Street, Hong Kong.mp4">
+                        <video src="{{ url_for('static', filename='assets/background/Temple Street, Hong Kong.mp4') }}" muted loop playsinline></video>
+                        <span class="map-name">TEMPLE STREET HK</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <button class="btn-main" onclick="startGame()">START GAME</button>
+        </div>
+
+        <button class="corner-btn top-right" onclick="toggleModal('leaderboard-modal')">HIGH SCORES</button>
+        <button class="corner-btn bottom-left" onclick="toggleModal('controls-modal')">CONTROLS</button>
+        <button class="corner-btn bottom-right" onclick="toggleModal('about-modal')">CREDITS</button>
+    </div>
+</div>
+
+
+<div id="leaderboard-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="toggleModal('leaderboard-modal')">X</span>
+        <h2>HALL OF FAME</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>RANK</th>
+                    <th>NAME</th>
+                    <th>WINS</th>
+                    <th>LOSS</th>
+                    <th>WIN-LOSS RATIO</th>
+                </tr>
+            </thead>
+            <tbody id="leaderboard-body">
+                <tr>
+                    <td colspan="3">LOADING...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="controls-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="toggleModal('controls-modal')">X</span>
+        <h2>HOW TO PLAY</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px;">
+            <div style="border: 4px solid #ffffff; padding: 20px; text-align: center;">
+                <h3 style="color:#bbbbbb">MOVE</h3>
+                <p><strong style="font-size: 32px;">A</strong> <br> LEFT</p>
+                <p><strong style="font-size: 32px;">D</strong> <br> RIGHT</p>
+            </div>
+            <div style="border: 4px solid #ffffff; padding: 20px; text-align: center;">
+                <h3 style="color:#bbbbbb">FIGHT</h3>
+                <p><strong style="font-size: 32px;">K</strong> <br> JUMP</p>
+                <p><strong style="font-size: 32px;">J</strong> <br> ATTACK</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="about-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="toggleModal('about-modal')">X</span>
+        <h2>PROJECT INFO</h2>
+        <p style="margin-top: 30px; line-height: 1.8;">CART 351 - PROJECT III<br>EXPLORABLE NETWORKED
+            SPACE<br><br>CREATED BY: <strong>Tianshun Wu & Junming He -- Concordia University -- CART 351</strong><br>2025</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+<script>
+    const socket = io();
+
+    socket.on("connect", () => {
+        console.log("Connected! SID:", socket.id);
+    });
+
+    socket.on("disconnect", () => {
+        console.log("Disconnected!");
+    });
+</script>
+
+{% endblock %}

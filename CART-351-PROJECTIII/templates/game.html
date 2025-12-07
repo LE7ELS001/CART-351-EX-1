@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}
+game Page
+{% endblock %}
+
+{% block head %}
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="game-page-wrapper">
+
+    <div class="game-screen-container">
+
+        <!-- game over-->
+        <div id="result-overlay">
+            <div id="result-title">GAME OVER</div>
+            <div id="result-subtitle">Player A Wins</div>
+            <button class="btn-return" onclick="window.location.href='/'">
+                Return to Main Menu
+            </button>
+        </div>
+
+        <!--HUD-->
+        <div class="hud-container">
+
+
+            <div style="flex: 1; display: flex; flex-direction: column; align-items: flex-start;">
+                <div class="player-name name-left">Player 1</div>
+                <div class="healthbar-bg">
+                    <div class="healthbar-fill" id="hp-left" style="width: 100%;"></div>
+                </div>
+            </div>
+
+            <!--Timer-->
+            <div id="Timer">60</div>
+
+
+            <div style="flex: 1; display: flex; flex-direction: column; align-items: flex-end;">
+                <div class="player-name name-right">Waiting for Player 2</div>
+                <div class="healthbar-bg">
+                    <div class="healthbar-fill" id="hp-right" style="width: 100%;"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <video id="game-bg-video" class="game-bg-video" autoplay muted loop playsinline></video>
+
+        <canvas></canvas>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/game.css') }}">
+<script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+<script src="{{ url_for('static', filename='js/utils.js') }}"></script>
+<script src="{{ url_for('static', filename='js/classes.js') }}"></script>
+<script src="{{ url_for('static', filename='js/game.js') }}"></script>
+{% endblock %}
